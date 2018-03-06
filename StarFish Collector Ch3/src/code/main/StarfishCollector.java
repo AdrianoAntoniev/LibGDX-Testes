@@ -1,5 +1,7 @@
 package code.main;
 
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+
 import code.entities.BaseActor;
 import code.entities.Starfish;
 import code.entities.Turtle;
@@ -21,8 +23,20 @@ public class StarfishCollector extends GameBeta {
 
 	@Override
 	public void update(float dt) {
-		// TODO Auto-generated method stub
-
+		if(turtle.overlaps(starfish) && !starfish.isCollected()) {
+			starfish.collect();
+			/*
+			 * NAO FOI ENCONTRADA A FIGURA WHIRLPOOL
+			Whirlpool whirl = new Whirlpool(0,0, mainStage);
+			whirl.centerAtActor( starfish );
+			whirl.setOpacity(0.25f);*/
+			BaseActor youWinMessage = new BaseActor(0,0, mainStage);
+			youWinMessage.loadTexture("assets/you-win.png");
+			youWinMessage.centerAtPosition(400, 300);
+			youWinMessage.setOpacity(0);
+			youWinMessage.addAction(Actions.delay(1));
+			youWinMessage.addAction(Actions.after(Actions.fadeIn(1)));
+		}
 	}
 
 }

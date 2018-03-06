@@ -18,6 +18,8 @@ public class Turtle extends BaseActor {
 			 "assets/turtle-4.png", "assets/turtle-5.png", "assets/turtle-6.png"};
 		
 		loadAnimationFromFiles(fileNames, 0.1f, true);
+		
+		setBoundaryPolygon(8);
 	}
 
 	@Override
