@@ -1,11 +1,17 @@
 package code.entities;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
 public class Turtle extends BaseActor {
 
 	public Turtle(float x, float y, Stage s) {
 		super(x, y, s);
+		
+		setAcceleration(400);
+		setMaxSpeed(100);
+		setDeceleration(400);
 		
 		String[] fileNames = 
 			{"assets/turtle-1.png", "assets/turtle-2.png", "assets/turtle-3.png",
@@ -14,4 +20,19 @@ public class Turtle extends BaseActor {
 		loadAnimationFromFiles(fileNames, 0.1f, true);
 	}
 
+	@Override
+	public void act(float dt) {
+		super.act(dt);
+		
+		if(Gdx.input.isKeyPressed(Keys.LEFT)) accelerateAtAngle(180);
+		if(Gdx.input.isKeyPressed(Keys.RIGHT)) accelerateAtAngle(0);
+		if(Gdx.input.isKeyPressed(Keys.UP)) accelerateAtAngle(90);
+		if(Gdx.input.isKeyPressed(Keys.DOWN)) accelerateAtAngle(270);
+		
+		applyPhysics(dt);
+		setAnimationPaused(!isMoving());
+		
+		if(getSpeed() > 0)
+			setRotation(getMotionAngle());
+	}
 }
