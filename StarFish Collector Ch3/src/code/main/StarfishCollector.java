@@ -3,6 +3,7 @@ package code.main;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 
 import code.entities.BaseActor;
+import code.entities.Rock;
 import code.entities.Starfish;
 import code.entities.Turtle;
 
@@ -10,6 +11,7 @@ public class StarfishCollector extends GameBeta {
 	private Turtle turtle;
 	private Starfish starfish;
 	private BaseActor ocean;
+	private Rock rock;
 		
 	@Override
 	public void initialize() {
@@ -19,10 +21,14 @@ public class StarfishCollector extends GameBeta {
 		
 		starfish = new Starfish(380, 380, mainStage);
 		turtle = new Turtle(20, 20, mainStage);
+		
+		rock = new Rock(200,200, mainStage);
 	}
 
 	@Override
 	public void update(float dt) {
+		turtle.preventOverlap(rock);
+		
 		if(turtle.overlaps(starfish) && !starfish.isCollected()) {
 			starfish.collect();
 			/*
