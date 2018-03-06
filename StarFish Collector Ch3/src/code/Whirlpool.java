@@ -1,4 +1,4 @@
-package code.entities;
+package code;
 
 import com.badlogic.gdx.scenes.scene2d.Stage;
 

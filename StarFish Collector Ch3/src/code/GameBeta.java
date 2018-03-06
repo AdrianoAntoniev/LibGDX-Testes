@@ -1,4 +1,4 @@
-package code.main;
+package code;
 
 import org.omg.CORBA.INITIALIZE;
 

@@ -1,4 +1,4 @@
-package code.main;
+package code;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
