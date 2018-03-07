@@ -306,6 +306,17 @@ public class BaseActor extends Actor {
 		return getList(stage, className).size();
 	}
 	
+	public void wrapAroundWorld() {
+		if(getX() + getWidth() < 0)
+			setX(worldBounds.width);
+		if(getX() > worldBounds.width)
+			setX(-getWidth());
+		if(getY() + getHeight() < 0)
+			setY(worldBounds.height);
+		if(getY() > worldBounds.height)
+			setY(-getHeight());
+	}
+	
 	private Animation createAnimation(float frameDuration, Array<TextureRegion> textureArray, boolean loop) {
 		Animation anim = new Animation(frameDuration, textureArray);
 
