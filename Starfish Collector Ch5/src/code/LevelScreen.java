@@ -1,8 +1,17 @@
 package code;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.Event;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputEvent.Type;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.Button.ButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 public class LevelScreen extends BaseScreen {
 	private Turtle turtle;
@@ -33,6 +42,24 @@ public class LevelScreen extends BaseScreen {
 		starfishLabel.setPosition(20, 550);
 		uiStage.addActor(starfishLabel);
 
+		ButtonStyle buttonStyle = new ButtonStyle();
+		Texture buttonTex = new Texture(Gdx.files.internal("assets/undo.png"));
+		TextureRegion buttonRegion = new TextureRegion(buttonTex);
+		buttonStyle.up = new TextureRegionDrawable(buttonRegion);
+		
+		Button restartButton = new Button(buttonStyle);
+		restartButton.setColor(Color.CYAN);
+		restartButton.setPosition(720,520);
+		uiStage.addActor(restartButton);
+		
+		restartButton.addListener((Event e) -> {
+			if((e instanceof InputEvent) && 
+					((InputEvent)e).getType().equals(Type.touchDown))
+				StarfishGame.setActiveScreen(new LevelScreen());
+			
+			return false;
+		});
+		
 		turtle = new Turtle(20, 20, mainStage);
 
 		win = false;		
