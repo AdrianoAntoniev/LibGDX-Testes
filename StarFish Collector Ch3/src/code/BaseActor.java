@@ -3,6 +3,7 @@ package code;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
@@ -18,6 +19,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.viewport.Viewport;
 
 public class BaseActor extends Actor {
 	private Animation animation;
@@ -67,6 +69,16 @@ public class BaseActor extends Actor {
 			setY(worldBounds.height - getHeight());		
 	}
 	
+	public void alignCamera() {
+		Camera cam = this.getStage().getCamera();
+		Viewport v = this.getStage().getViewport();
+		
+		cam.position.set(this.getX() + this.getOriginX(), this.getY() + this.getOriginY(), 0);
+		cam.position.x = MathUtils.clamp(cam.position.x, cam.viewportWidth/2, worldBounds.width - cam.viewportWidth/2);
+		cam.position.y = MathUtils.clamp(cam.position.y, cam.viewportHeight/2, worldBounds.height - cam.viewportHeight/2);
+		cam.update();
+				
+	}
 	
 	
 	public void setAnimation(Animation anim) {
