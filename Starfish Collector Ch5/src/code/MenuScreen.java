@@ -14,21 +14,22 @@ public class MenuScreen extends BaseScreen {
 		BaseActor ocean = new BaseActor(0, 0, mainStage);
 		ocean.loadTexture("assets/water.jpg");
 		ocean.setSize(800, 600);
-
+		
 		BaseActor title = new BaseActor(0, 0, mainStage);
 		title.loadTexture("assets/starfish-collector.png");
-		title.centerAtPosition(400, 300);
-		title.moveBy(0, 100);
-
+		//title.centerAtPosition(400, 300);
+		//title.moveBy(0, 100);
+		
 		/*
 		 * BaseActor start = new BaseActor(0,0, mainStage);
 		 * start.loadTexture("assets/message-start.png");
 		 * start.centerAtPosition(400, 300); start.moveBy(0, -100);
 		 */
-
+		
 		TextButton startButton = new TextButton("Start", BaseGame.textButtonStyle);
-		startButton.setPosition(150, 150);
-		uiStage.addActor(startButton);
+		//startButton.setPosition(150, 150);
+		//uiStage.addActor(startButton);
+		
 		startButton.addListener((Event e) -> {
 			if ((e instanceof InputEvent)) {
 				InputEvent ie = (InputEvent)e;
@@ -41,8 +42,9 @@ public class MenuScreen extends BaseScreen {
 		});
 		
 		TextButton quitButton = new TextButton("Quit", BaseGame.textButtonStyle);
-		quitButton.setPosition(530, 150);
-		uiStage.addActor(quitButton);
+		
+		//quitButton.setPosition(530, 150);
+		//uiStage.addActor(quitButton);
 		quitButton.addListener((Event e) -> {
 			if ((e instanceof InputEvent)) {
 				InputEvent ie = (InputEvent)e;
@@ -53,13 +55,16 @@ public class MenuScreen extends BaseScreen {
 			return false;
 		});
 		
-
+		uiTable.add(title).colspan(2);
+		uiTable.row();
+		uiTable.add(startButton);
+		uiTable.add(quitButton);
+		
 	}
 
 	@Override
 	public void update(float dt) {
-		if (Gdx.input.isKeyPressed(Keys.S))
-			StarfishGame.setActiveScreen(new LevelScreen());
+		
 	}
 	
 	@Override
