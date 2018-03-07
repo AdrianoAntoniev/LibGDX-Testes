@@ -10,10 +10,11 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Intersector;
+import com.badlogic.gdx.math.Intersector.MinimumTranslationVector;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Polygon;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Intersector.MinimumTranslationVector;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
@@ -28,7 +29,16 @@ public class BaseActor extends Actor {
 	private float maxSpeed;
 	private float deceleration;
 	private Polygon boundaryPolygon;
-
+	private static Rectangle worldBounds;
+	
+	public static void setWorldBounds(float w, float h) {
+		worldBounds = new Rectangle(0, 0, w, h);		
+	}
+	
+	public static void setWorldBounds(BaseActor ba) {
+		setWorldBounds(ba.getWidth(), ba.getHeight());		
+	}
+	
 	public BaseActor(float x, float y, Stage s) {
 		super();
 		setPosition(x, y);
@@ -46,6 +56,19 @@ public class BaseActor extends Actor {
 		deceleration = 0;
 	}
 
+	public void boundToWorld() {
+		if(getX() < 0) 
+			setX(0);
+		if(getX() + getWidth() > worldBounds.width) 
+			setX(worldBounds.width - getWidth());
+		if(getY() < 0) 
+			setY(0);
+		if(getY() + getHeight() > worldBounds.height)
+			setY(worldBounds.height - getHeight());		
+	}
+	
+	
+	
 	public void setAnimation(Animation anim) {
 		this.animation = anim;
 		TextureRegion tr = animation.getKeyFrame(0);
