@@ -1,5 +1,7 @@
 package code;
 
+import com.badlogic.gdx.Input.Keys;
+
 public class LevelScreen extends BaseScreen {
 	private Spaceship spaceship;
 	
@@ -15,8 +17,14 @@ public class LevelScreen extends BaseScreen {
 
 	@Override
 	public void update(float dt) {
+	}
+	
+	@Override
+	public boolean keyDown(int keycode) {
+		if(keycode == Keys.X)
+			spaceship.warp();
 		
-
+		return false;
 	}
 
 }
