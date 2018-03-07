@@ -40,11 +40,9 @@ public class StarfishCollector extends GameBeta {
 			if(turtle.overlaps(starfish) && !starfish.isCollected()) {
 				starfish.collect();
 				
-				/*
-				 * NAO FOI ENCONTRADA A FIGURA WHIRLPOOL
 				Whirlpool whirl = new Whirlpool(0,0, mainStage);
-				whirl.centerAtActor( starfish );S
-				whirl.setOpacity(0.25f);*/		
+				whirl.centerAtActor( starfish );
+				whirl.setOpacity(0.25f);		
 	
 			}
 		}

@@ -17,7 +17,7 @@ public class MenuScreen extends BaseScreen {
 		title.moveBy(0, 100);
 		
 		BaseActor start = new BaseActor(0,0, mainStage);
-		start.loadTexture("assets/start.png");
+		start.loadTexture("assets/message-start.png");
 		start.centerAtPosition(400, 300);
 		start.moveBy(0, -100);
 

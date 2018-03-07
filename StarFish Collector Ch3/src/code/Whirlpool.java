@@ -8,7 +8,7 @@ public class Whirlpool extends BaseActor {
 		super(x, y, s);
 		
 		//No github nao se encontra a imagem whirlpool!
-		//loadAnimationFromSheet("assets/whirlpool.png", 2, 5, 0.1f, false);
+		loadAnimationFromSheet("assets/whirlpool.png", 2, 5, 0.1f, false);
 	}
 	
 	public void act(float dt) {
