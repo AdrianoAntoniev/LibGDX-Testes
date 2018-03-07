@@ -17,11 +17,12 @@ import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
-public class BaseActor extends Actor {
+public class BaseActor extends Group {
 	private Animation animation;
 	private float elapsedTime;
 	private boolean animationPaused;
@@ -108,14 +109,13 @@ public class BaseActor extends Actor {
 
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
-		super.draw(batch, parentAlpha);
-
 		Color c = getColor();
 		batch.setColor(c.r, c.g, c.b, c.a);
 
 		if (animation != null && isVisible())
 			batch.draw(animation.getKeyFrame(elapsedTime), getX(), getY(), getOriginX(), getOriginY(), getWidth(),
 					getHeight(), getScaleX(), getScaleY(), getRotation());
+		super.draw(batch, parentAlpha);
 	}
 
 	public Animation loadAnimationFromFiles(String[] fileNames, float frameDuration, boolean loop) {
