@@ -36,7 +36,7 @@ public class LevelScreen extends BaseScreen {
 		new Rock(100, 300, mainStage);
 		new Rock(300, 350, mainStage);
 		new Rock(400, 200, mainStage);
-		
+
 		starfishLabel = new Label("Starfish left: ", BaseGame.labelStyle);
 		starfishLabel.setColor(Color.CYAN);
 		starfishLabel.setPosition(20, 550);
@@ -46,53 +46,55 @@ public class LevelScreen extends BaseScreen {
 		Texture buttonTex = new Texture(Gdx.files.internal("assets/undo.png"));
 		TextureRegion buttonRegion = new TextureRegion(buttonTex);
 		buttonStyle.up = new TextureRegionDrawable(buttonRegion);
-		
+
 		Button restartButton = new Button(buttonStyle);
 		restartButton.setColor(Color.CYAN);
-		restartButton.setPosition(720,520);
+		restartButton.setPosition(720, 520);
 		uiStage.addActor(restartButton);
-		
+
 		restartButton.addListener((Event e) -> {
-			if((e instanceof InputEvent) && 
-					((InputEvent)e).getType().equals(Type.touchDown))
-				StarfishGame.setActiveScreen(new LevelScreen());
+			if(e instanceof InputEvent) {
+				InputEvent ie = (InputEvent) e;
+				if (ie.getType().equals(Type.touchDown))
+					StarfishGame.setActiveScreen(new LevelScreen());
+			} 
 			
 			return false;
 		});
-		
+
 		turtle = new Turtle(20, 20, mainStage);
 
-		win = false;		
+		win = false;
 	}
 
 	@Override
 	public void update(float dt) {
-		starfishLabel.setText("Starfish Left: " + BaseActor.count(mainStage,  "code.Starfish"));
-		for(BaseActor rockActor : BaseActor.getList(mainStage, "code.Rock"))
+		starfishLabel.setText("Starfish Left: " + BaseActor.count(mainStage, "code.Starfish"));
+		for (BaseActor rockActor : BaseActor.getList(mainStage, "code.Rock"))
 			turtle.preventOverlap(rockActor);
-		
-		for(BaseActor starfishActor : BaseActor.getList(mainStage, "code.Starfish")){
-			Starfish starfish = (Starfish)starfishActor;
-			if(turtle.overlaps(starfish) && !starfish.isCollected()) {
+
+		for (BaseActor starfishActor : BaseActor.getList(mainStage, "code.Starfish")) {
+			Starfish starfish = (Starfish) starfishActor;
+			if (turtle.overlaps(starfish) && !starfish.isCollected()) {
 				starfish.collect();
-				
-				Whirlpool whirl = new Whirlpool(0,0, mainStage);
-				whirl.centerAtActor( starfish );
+
+				Whirlpool whirl = new Whirlpool(0, 0, mainStage);
+				whirl.centerAtActor(starfish);
 				whirl.setOpacity(0.25f);
-	
+
 			}
 		}
-			
-		if(BaseActor.count(mainStage, "code.Starfish") == 0 && !win) {
+
+		if (BaseActor.count(mainStage, "code.Starfish") == 0 && !win) {
 			win = true;
-			BaseActor youWinMessage = new BaseActor(0,0, uiStage);
+			BaseActor youWinMessage = new BaseActor(0, 0, uiStage);
 			youWinMessage.loadTexture("assets/you-win.png");
 			youWinMessage.centerAtPosition(400, 300);
 			youWinMessage.setOpacity(0);
 			youWinMessage.addAction(Actions.delay(1));
 			youWinMessage.addAction(Actions.after(Actions.fadeIn(1)));
 		}
-		
+
 	}
 
 }
