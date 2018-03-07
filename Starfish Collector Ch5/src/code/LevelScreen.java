@@ -17,6 +17,7 @@ public class LevelScreen extends BaseScreen {
 	private Turtle turtle;
 	private boolean win;
 	private Label starfishLabel;
+	private DialogBox dialogBox;
 
 	@Override
 	public void initialize() {
@@ -24,7 +25,6 @@ public class LevelScreen extends BaseScreen {
 		ocean.loadTexture("assets/water-border.jpg");
 		ocean.setSize(1200, 900);
 
-		// Arrumar num futuro proximo, pois nao esta conciso.
 		BaseActor.setWorldBounds(ocean);
 
 		new Starfish(400, 400, mainStage);
@@ -36,11 +36,21 @@ public class LevelScreen extends BaseScreen {
 		new Rock(100, 300, mainStage);
 		new Rock(300, 350, mainStage);
 		new Rock(400, 200, mainStage);
+		
+		turtle = new Turtle(20, 20, mainStage);
+
+		Sign sign1 = new Sign(20,400, mainStage);
+		sign1.setText("West Starfish Bay");
+		
+		Sign sign2 = new Sign(600,300, mainStage);
+		sign2.setText("East Starfish Bay");
+		
+		win = false;
 
 		starfishLabel = new Label("Starfish left: ", BaseGame.labelStyle);
 		starfishLabel.setColor(Color.CYAN);
 		//starfishLabel.setPosition(20, 550);
-		uiStage.addActor(starfishLabel);
+		//uiStage.addActor(starfishLabel);
 
 		ButtonStyle buttonStyle = new ButtonStyle();
 		Texture buttonTex = new Texture(Gdx.files.internal("assets/undo.png"));
@@ -50,7 +60,7 @@ public class LevelScreen extends BaseScreen {
 		Button restartButton = new Button(buttonStyle);
 		restartButton.setColor(Color.CYAN);
 		//restartButton.setPosition(720, 520);
-		uiStage.addActor(restartButton);
+		//uiStage.addActor(restartButton);
 
 		restartButton.addListener((Event e) -> {
 			if(e instanceof InputEvent) {
@@ -60,21 +70,27 @@ public class LevelScreen extends BaseScreen {
 			} 
 			
 			return false;
-		});
-
-		turtle = new Turtle(20, 20, mainStage);
-
-		win = false;
+		});		
 		
 		uiTable.pad(10);
 		uiTable.add(starfishLabel).top();
 		uiTable.add().expandX().expandY();
 		uiTable.add(restartButton).top();
+		
+		dialogBox = new DialogBox(0, 0, uiStage);
+		dialogBox.setBackgroundColor(Color.TEAL);
+		dialogBox.setFontColor(Color.BLUE);
+		dialogBox.setDialogSize(600, 100);
+		dialogBox.setFontScale(0.80f);
+		dialogBox.alignCenter();
+		dialogBox.setVisible(false);
+		
+		uiTable.row();
+		uiTable.add(dialogBox).colspan(3);
 	}
 
 	@Override
 	public void update(float dt) {
-		starfishLabel.setText("Starfish Left: " + BaseActor.count(mainStage, "code.Starfish"));
 		for (BaseActor rockActor : BaseActor.getList(mainStage, "code.Rock"))
 			turtle.preventOverlap(rockActor);
 
@@ -98,6 +114,26 @@ public class LevelScreen extends BaseScreen {
 			youWinMessage.setOpacity(0);
 			youWinMessage.addAction(Actions.delay(1));
 			youWinMessage.addAction(Actions.after(Actions.fadeIn(1)));
+		}
+		
+		starfishLabel.setText("Starfish Left: " + BaseActor.count(mainStage, "code.Starfish"));
+		
+		for (BaseActor signActor: BaseActor.getList(mainStage, "code.Sign")) {
+			Sign sign = (Sign)signActor;
+			turtle.preventOverlap(sign);
+			boolean nearby = turtle.isWithinDistance(4, sign);
+			
+			if (nearby && !sign.isViewing()) {
+				dialogBox.setText(sign.getText());
+				dialogBox.setVisible(true);
+				sign.setViewing(true);
+			} 
+			
+			if (sign.isViewing() && !nearby) {
+				dialogBox.setText(" ");
+				dialogBox.setVisible(false);
+				sign.setViewing(false);
+			}
 		}
 
 	}
