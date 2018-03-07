@@ -1,15 +1,18 @@
 package code;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 
 public class LevelScreen extends BaseScreen {
 	private Turtle turtle;
 	private boolean win;
+	private Label starfishLabel;
 
 	@Override
 	public void initialize() {
 		BaseActor ocean = new BaseActor(0, 0, mainStage);
-		ocean.loadTexture("assets/water.jpg");
+		ocean.loadTexture("assets/water-border.jpg");
 		ocean.setSize(1200, 900);
 
 		// Arrumar num futuro proximo, pois nao esta conciso.
@@ -24,14 +27,20 @@ public class LevelScreen extends BaseScreen {
 		new Rock(100, 300, mainStage);
 		new Rock(300, 350, mainStage);
 		new Rock(400, 200, mainStage);
+		
+		starfishLabel = new Label("Starfish left: ", BaseGame.labelStyle);
+		starfishLabel.setColor(Color.CYAN);
+		starfishLabel.setPosition(20, 550);
+		uiStage.addActor(starfishLabel);
 
 		turtle = new Turtle(20, 20, mainStage);
 
-		win = false;
+		win = false;		
 	}
 
 	@Override
 	public void update(float dt) {
+		starfishLabel.setText("Starfish Left: " + BaseActor.count(mainStage,  "code.Starfish"));
 		for(BaseActor rockActor : BaseActor.getList(mainStage, "code.Rock"))
 			turtle.preventOverlap(rockActor);
 		
@@ -56,7 +65,7 @@ public class LevelScreen extends BaseScreen {
 			youWinMessage.addAction(Actions.delay(1));
 			youWinMessage.addAction(Actions.after(Actions.fadeIn(1)));
 		}
-
+		
 	}
 
 }
