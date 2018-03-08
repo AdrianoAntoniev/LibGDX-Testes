@@ -17,4 +17,10 @@ public class Sky extends LandscapeActor {
 	public Sky(float x, float y, Stage s) {
 		super(x, y, s, fileName, speed, motionAngle);		
 	}
+
+	@Override
+	public void performWhenInLeftSide() {
+		super.moveBy(2 * getWidth(), 0);
+		
+	}
 }

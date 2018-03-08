@@ -17,4 +17,10 @@ public class Ground extends LandscapeActor {
 		super(x, y, s, fileName, speed, motionAngle);		
 	}
 
+	@Override
+	public void performWhenInLeftSide() {
+		super.moveBy(2 * getWidth(), 0);
+		
+	}
+
 }

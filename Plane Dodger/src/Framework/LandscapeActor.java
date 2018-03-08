@@ -9,7 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
  * @author Adriano
  *
  */
-public class LandscapeActor extends BaseActor {
+public abstract class LandscapeActor extends BaseActor {
 	protected float speed;
 	protected float motionAngle;
 	protected String textureFilename;
@@ -44,8 +44,9 @@ public class LandscapeActor extends BaseActor {
 		super.applyPhysics(dt);
 		
 		if(getX() + getWidth() < 0) {
-			super.moveBy(2 * getWidth(), 0);
+			performWhenInLeftSide();
 		}
 	}
 
+	public abstract void performWhenInLeftSide();
 }
