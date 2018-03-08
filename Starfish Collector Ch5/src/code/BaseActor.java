@@ -42,6 +42,10 @@ public class BaseActor extends Group {
 		setWorldBounds(ba.getWidth(), ba.getHeight());		
 	}
 	
+	public static Rectangle getWorldBounds() {
+		return worldBounds;
+	}
+	
 	public BaseActor(float x, float y, Stage s) {
 		super();
 		setPosition(x, y);
