@@ -1,8 +1,9 @@
 package Framework;
 
-import javax.annotation.processing.ProcessingEnvironment;
-
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 
@@ -18,6 +19,10 @@ public class LevelScreen extends BaseScreen {
 	float enemySpeed;
 	boolean gameOver;
 	BaseActor gameOverMessage;
+	
+	Music backgroundMusic;
+	Sound sparkleSound;
+	Sound explosionSound;
 	
 	public void initialize() {
 		new Sky(0, 0, mainStage);
@@ -45,6 +50,14 @@ public class LevelScreen extends BaseScreen {
 		gameOverMessage = new BaseActor(0, 0, uiStage);
 		gameOverMessage.loadTexture("assets/game-over.png");
 		gameOverMessage.setVisible(false);
+		
+		backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("assets/Prelude-and-Action.mp3"));
+		sparkleSound = Gdx.audio.newSound(Gdx.files.internal("assets/sparkle.mp3"));
+		explosionSound = Gdx.audio.newSound(Gdx.files.internal("assets/explosion.wav"));
+		
+		backgroundMusic.setLooping(true);
+		backgroundMusic.setVolume(1.00f);
+		backgroundMusic.play();
 	}
 
 	public void update(float dt) {
@@ -63,6 +76,9 @@ public class LevelScreen extends BaseScreen {
 				star.remove();
 				score++;
 				scoreLabel.setText(Integer.toString(score));
+				Sparkle sp = new Sparkle(0, 0, mainStage);
+				sp.centerAtActor(star);
+				sparkleSound.play();
 			}
 		}
 		
@@ -87,6 +103,12 @@ public class LevelScreen extends BaseScreen {
 			if(gameOver) {
 				plane.remove();
 				gameOverMessage.setVisible(true);
+				Explosion ex = new Explosion(0, 0, mainStage);
+				ex.centerAtActor(plane);
+				ex.setScale(3);
+				explosionSound.play();
+				backgroundMusic.stop();
+				return;
 			}	
 			
 			if(enemy.getX() + enemy.getWidth() < 0) {
