@@ -2,27 +2,23 @@ package Framework;
 
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
-public class Plane extends BaseActor {
+public class PlayerPlane extends AbstractPlane {
+	private static final String[] fileNames = {"assets/planeGreen0.png",
+			  								   "assets/planeGreen1.png",	
+			  								   "assets/planeGreen2.png",
+			  									"assets/planeGreen1.png"};
 
-	public Plane(float x, float y, Stage s) {
-		super(x, y, s);
-		String[] fileNames = {"assets/planeGreen0.png",
-							  "assets/planeGreen1.png",	
-							  "assets/planeGreen2.png",
-							  "assets/planeGreen1.png"};
-		loadAnimationFromFiles(fileNames, 0.1f, true);
-		setMaxSpeed(800);
-		setBoundaryPolygon(8);
+	public PlayerPlane(float x, float y, Stage s) {
+		super(x, y, s, fileNames);
+		setMaxSpeed(800);	
 	}
 	
 	@Override
 	public void act(float dt) {
 		super.act(dt);
-		
 		//simulate force of gravity
 		setAcceleration(800);
 		accelerateAtAngle(270);
-		applyPhysics(dt);
 		
 		//stop plane from passing through the ground
 		for(BaseActor ground: BaseActor.getList(this.getStage(), "Framework.Ground")) {
