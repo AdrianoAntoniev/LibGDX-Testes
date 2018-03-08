@@ -107,7 +107,7 @@ public class LevelScreen extends BaseScreen {
 				ex.centerAtActor(plane);
 				ex.setScale(3);
 				explosionSound.play();
-				backgroundMusic.stop();
+				backgroundMusic.stop();				
 				return;
 			}	
 			
@@ -125,5 +125,12 @@ public class LevelScreen extends BaseScreen {
 		}
 		
 		return true;
+	}
+	
+	@Override
+	public void dispose() {
+		backgroundMusic.dispose();
+		sparkleSound.dispose();
+		explosionSound.dispose();;
 	}
 }

@@ -21,6 +21,5 @@ public class Sky extends LandscapeActor {
 	@Override
 	public void performWhenInLeftSide() {
 		super.moveBy(2 * getWidth(), 0);
-		
 	}
 }
