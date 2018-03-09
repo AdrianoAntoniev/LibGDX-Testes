@@ -1,6 +1,8 @@
 package code;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.math.MathUtils;
+import com.sun.corba.se.spi.oa.OADestroyed;
 
 public class LevelScreen extends BaseScreen {
 	Paddle paddle;
@@ -45,6 +47,26 @@ public class LevelScreen extends BaseScreen {
 		if(ball.isPaused()) {
 			ball.setX(paddle.getX() + paddle.getWidth()/2 - ball.getWidth()/2);
 			ball.setY(paddle.getY() + paddle.getHeight()/2 - ball.getHeight()/2);
+		}
+		
+		for(BaseActor wall : BaseActor.getList(mainStage, "code.Wall")) {
+			if(ball.overlaps(wall)) {
+				ball.bounceOff(wall);
+			}
+		}
+		
+		for(BaseActor brick : BaseActor.getList(mainStage, "code.Brick")) {
+			if(ball.overlaps(brick)) {
+				ball.bounceOff(brick);
+				brick.remove();
+			}
+		}
+		
+		if(ball.overlaps(paddle)) {
+			float ballCenterX = ball.getX() + ball.getWidth()/2;
+			float paddlePercentHit = (ballCenterX - paddle.getX()) / paddle.getWidth();
+			float bounceAngle = MathUtils.lerp(150, 30, paddlePercentHit);
+			ball.setMotionAngle(bounceAngle);
 		}
 	}
 	
