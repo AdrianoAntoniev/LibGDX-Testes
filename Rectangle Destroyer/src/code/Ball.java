@@ -35,10 +35,12 @@ public class Ball extends BaseActor {
 	}
 	
 	public void bounceOff(BaseActor other) {
-		Vector2 v = this.preventOverlap(other);
-		if(Math.abs(v.x) >= Math.abs(v.y))
-			this.velocityVec.x *= -1;
-		else
-			this.velocityVec.y *= 1;
-	}
+        Vector2 v = this.preventOverlap(other);
+        if ( Math.abs(v.x) >= Math.abs(v.y) ) // horizontal bounce
+            this.velocityVec.x *= -1;
+        else // vertical bounce
+            this.velocityVec.y *= -1;
+    }
+	
+	
 }
