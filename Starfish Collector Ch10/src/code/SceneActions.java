@@ -2,7 +2,7 @@ package code;
 
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
-import com.badlogic.gdx.scenes.scene2d.utils.Align;
+import com.badlogic.gdx.utils.Align;
 
 public class SceneActions extends Actions {
 	public static Action moveToScreenLeft(float duration) {

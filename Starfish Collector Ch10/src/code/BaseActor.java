@@ -23,7 +23,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 public class BaseActor extends Group {
-	private Animation animation;
+	private Animation<TextureRegion> animation;
 	private float elapsedTime;
 	private boolean animationPaused;
 	private Vector2 velocityVec;	
